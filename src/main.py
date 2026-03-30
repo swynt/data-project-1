@@ -1,4 +1,4 @@
-from sqlalchemy import create_engine
+"""from sqlalchemy import create_engine
 import pandas as pd
 
 # load data
@@ -18,7 +18,7 @@ df.to_sql(
     chunksize=1000,  # biar stabil
 )
 
-print("Data berhasil masuk ke tabel 'orders' 🚀")
+print("Data berhasil masuk ke tabel 'orders' 🚀")"""
 
 """ 
 from sqlalchemy import create_engine
@@ -30,3 +30,14 @@ engine = create_engine(DB_URL)
 with engine.connect() as conn:
     print("Connected!")
  """
+
+""" from sqlalchemy import create_engine
+
+DB_URL = "postgresql://postgres:QKBR6uAV5IFPYqls@db.kvnklalnsobpxbhsiobv.supabase.co:5432/postgres"
+
+engine = create_engine(
+    DB_URL, connect_args={"sslmode": "require", "options": "-c client_encoding=utf8"}
+)
+
+with engine.connect() as conn:
+    print("Connected!") """
