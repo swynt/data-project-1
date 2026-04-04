@@ -1,26 +1,44 @@
 import streamlit as st
 import pandas as pd
 import joblib
+import os
 
-# Load model & features
-model = joblib.load("model/model.pkl")
-features = joblib.load("model/features.pkl")
+# ======================
+# LOAD MODEL (FIX PATH CLOUD)
+# ======================
+
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+
+model_path = os.path.join(BASE_DIR, "model", "model.pkl")
+features_path = os.path.join(BASE_DIR, "model", "features.pkl")
+
+model = joblib.load(model_path)
+features = joblib.load(features_path)
+
+# ======================
+# UI
+# ======================
+
+st.set_page_config(page_title="Dropout Prediction", layout="centered")
 
 st.title("🎓 Student Dropout Prediction")
+st.markdown("Masukkan data mahasiswa untuk memprediksi risiko dropout.")
 
 # ======================
-# INPUT USER (WAJIB DI ATAS)
+# INPUT USER
 # ======================
 
-age = st.number_input("Age at Enrollment", 17, 60)
-admission = st.number_input("Admission Grade", 0.0, 200.0)
+st.subheader("📊 Academic & Financial Data")
+
+age = st.number_input("Age at Enrollment", 17, 60, value=20)
+admission = st.number_input("Admission Grade", 0.0, 200.0, value=120.0)
 tuition = st.selectbox("Tuition Fees Up To Date", [0, 1])
 
-approved_1 = st.number_input("Approved 1st Semester", 0, 10)
-approved_2 = st.number_input("Approved 2nd Semester", 0, 10)
+approved_1 = st.number_input("Approved Units - 1st Semester", 0, 10, value=3)
+approved_2 = st.number_input("Approved Units - 2nd Semester", 0, 10, value=3)
 
-grade_1 = st.number_input("Grade 1st Semester", 0.0, 20.0)
-grade_2 = st.number_input("Grade 2nd Semester", 0.0, 20.0)
+grade_1 = st.number_input("Grade - 1st Semester", 0.0, 20.0, value=12.0)
+grade_2 = st.number_input("Grade - 2nd Semester", 0.0, 20.0, value=12.0)
 
 # ======================
 # FEATURE ENGINEERING
@@ -30,7 +48,7 @@ total_approved = approved_1 + approved_2
 avg_grade = (grade_1 + grade_2) / 2
 
 # ======================
-# PREPARE INPUT (FULL FEATURES)
+# PREPARE INPUT
 # ======================
 
 input_dict = {col: 0 for col in features}
@@ -55,10 +73,23 @@ input_df = pd.DataFrame([input_dict])
 # PREDICTION
 # ======================
 
-if st.button("Predict"):
-    pred = model.predict(input_df)[0]
+st.subheader("🔍 Prediction Result")
 
-    if pred == 1:
-        st.error("⚠️ High Risk of Dropout")
-    else:
-        st.success("✅ Low Risk")
+if st.button("Predict"):
+    try:
+        pred = model.predict(input_df)[0]
+
+        if pred == 1:
+            st.error("⚠️ High Risk of Dropout")
+        else:
+            st.success("✅ Low Risk")
+
+    except Exception as e:
+        st.error(f"Error during prediction: {e}")
+
+# ======================
+# FOOTER (BONUS)
+# ======================
+
+st.markdown("---")
+st.caption("Built with Streamlit | Data Science Project")
