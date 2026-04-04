@@ -78,17 +78,24 @@ st.subheader("🔍 Prediction Result")
 if st.button("Predict"):
     try:
         pred = model.predict(input_df)[0]
+        proba = model.predict_proba(input_df)[0][1]
 
         if pred == 1:
             st.error("⚠️ High Risk of Dropout")
+            st.write(
+                "Mahasiswa disarankan mendapatkan perhatian khusus, seperti mentoring atau bantuan akademik."
+            )
         else:
             st.success("✅ Low Risk")
+            st.write("Mahasiswa menunjukkan performa yang stabil.")
+
+        st.info(f"📊 Dropout Probability: {proba:.2%}")
 
     except Exception as e:
         st.error(f"Error during prediction: {e}")
 
 # ======================
-# FOOTER (BONUS)
+# FOOTER
 # ======================
 
 st.markdown("---")
