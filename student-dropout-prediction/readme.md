@@ -46,11 +46,13 @@ Proyek ini mencakup:
 ### Persiapan
 
 **Sumber Data:**
-Dataset performa mahasiswa (Dicoding)
+https://github.com/dicodingacademy/dicoding_dataset/blob/main/students_performance/data.csv
 
 ---
 
 ### Setup Environment
+
+**Python Version:** 3.10
 
 #### Instalasi Dependencies
 
@@ -89,7 +91,7 @@ Dashboard ini menampilkan berbagai informasi penting seperti distribusi mahasisw
   Menampilkan persentase mahasiswa yang dropout dari total mahasiswa. Digunakan sebagai indikator utama kondisi institusi.
 
 * **Distribusi Status Mahasiswa**
-  Menunjukkan perbandingan antara mahasiswa yang dropout, masih aktif, dan lulus.
+  Menunjukkan perbandingan antara mahasiswa yang dropout, masih terdaftar (enrolled), dan lulus.
 
 * **Performa Akademik (Nilai)**
   Menunjukkan bahwa mahasiswa dengan nilai rendah cenderung memiliki risiko dropout lebih tinggi.
@@ -123,6 +125,20 @@ Fitur utama:
 
 ---
 
+## Model Performance
+
+Model yang digunakan adalah Logistic Regression.
+
+Hasil evaluasi menunjukkan:
+- Accuracy: 86% (baik)
+- Model mampu mengidentifikasi mahasiswa yang berisiko dropout dengan baik
+
+Model ini cukup stabil dan dapat digunakan sebagai dasar sistem early warning.
+
+Model dipilih karena memiliki keseimbangan antara performa dan interpretabilitas, sehingga mudah dipahami oleh pihak non-teknis.
+
+---
+
 ## Conclusion
 
 Berdasarkan hasil analisis, terdapat beberapa faktor utama yang mempengaruhi kemungkinan mahasiswa dropout:
@@ -142,6 +158,8 @@ Berdasarkan hasil analisis, terdapat beberapa faktor utama yang mempengaruhi kem
 Secara keseluruhan, performa akademik dan kondisi finansial merupakan faktor utama yang mempengaruhi dropout.
 
 Pendekatan berbasis data ini terbukti mampu membantu institusi dalam mengidentifikasi risiko sejak dini.
+
+Hasil ini juga konsisten dengan analisis data sebelumnya (EDA), di mana faktor akademik dan finansial terbukti menjadi indikator utama dropout.
 
 ---
 
