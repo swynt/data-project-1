@@ -22,7 +22,9 @@ features = joblib.load(features_path)
 st.set_page_config(page_title="Dropout Prediction", layout="centered")
 
 st.title("🎓 Student Dropout Prediction")
-st.markdown("Masukkan data mahasiswa untuk memprediksi risiko dropout.")
+st.markdown(
+    "Masukkan data mahasiswa untuk memprediksi apakah mahasiswa berpotensi **Dropout** atau **Lulus (Graduate)**."
+)
 
 # ======================
 # INPUT USER
@@ -32,7 +34,12 @@ st.subheader("📊 Academic & Financial Data")
 
 age = st.number_input("Age at Enrollment", 17, 60, value=20)
 admission = st.number_input("Admission Grade", 0.0, 200.0, value=120.0)
-tuition = st.selectbox("Tuition Fees Up To Date", [0, 1])
+
+tuition = st.selectbox(
+    "Tuition Fees Status",
+    [1, 0],
+    format_func=lambda x: "Up to Date (Paid)" if x == 1 else "Not Paid",
+)
 
 approved_1 = st.number_input("Approved Units - 1st Semester", 0, 10, value=3)
 approved_2 = st.number_input("Approved Units - 2nd Semester", 0, 10, value=3)
@@ -83,13 +90,16 @@ if st.button("Predict"):
         if pred == 1:
             st.error("⚠️ High Risk of Dropout")
             st.write(
-                "Mahasiswa disarankan mendapatkan perhatian khusus, seperti mentoring atau bantuan akademik."
+                "Mahasiswa memiliki risiko tinggi untuk tidak menyelesaikan studi. "
+                "Disarankan untuk mendapatkan bimbingan akademik atau dukungan tambahan."
             )
         else:
-            st.success("✅ Low Risk")
-            st.write("Mahasiswa menunjukkan performa yang stabil.")
+            st.success("🎓 Likely to Graduate")
+            st.write(
+                "Mahasiswa menunjukkan performa yang baik dan memiliki kemungkinan tinggi untuk menyelesaikan studi."
+            )
 
-        st.info(f"📊 Dropout Probability: {proba:.2%}")
+        st.info(f"📊 Probability of Dropout: {proba:.2%}")
 
     except Exception as e:
         st.error(f"Error during prediction: {e}")
@@ -99,4 +109,4 @@ if st.button("Predict"):
 # ======================
 
 st.markdown("---")
-st.caption("Built with Streamlit | Data Science Project")
+st.caption("Built with Streamlit | Student Dropout Prediction Project")
